@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Chat Landing Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #f4f4f4;
+      border-radius: 8px;
+    }
+    input, button {
+      padding: 0.6rem;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    #reply {
+      margin-top: 1rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 5px;
+      min-height: 50px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>💬 Chat with AI</h2>
+  <input type="text" id="message" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <div id="reply"></div>
+
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById('message').value;
+      const replyBox = document.getElementById('reply');
+      replyBox.textContent = "Thinking...";
+
+      try {
+        const res = await fetch('https://kioyamazaki2.duckdns.org:5678/webhook-test/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: message })
+        });
+
+        if (!res.ok) throw new Error("Server error");
+
+        const data = await res.json();
+        replyBox.textContent = data.reply || "No reply received.";
+      } catch (err) {
+        replyBox.textContent = "❌ Error: " + err.message;
+      }
+    }
+  </script>
+
+</body>
+</html>
