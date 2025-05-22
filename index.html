@@ -43,7 +43,7 @@
       replyBox.textContent = "Thinking...";
 
       try {
-        const res = await fetch('https://kioyamazaki2.duckdns.org:5678/webhook-test/chat', {
+        const res = await fetch('https://kioyamazaki2.duckdns.org/webhook/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: message })
